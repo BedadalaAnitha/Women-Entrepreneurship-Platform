@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Explore businesses — HerRise{% endblock %}
+{% block content %}
+<section class="directory-hero">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> WOMEN BUILDING WHAT’S NEXT</div>
+    <h1>One community.<br><span>So many stories.</span></h1>
+    <p>Meet the founders, find something you love, and show women-owned businesses some love.</p>
+    <a class="button" href="{{ url_for('register') }}">Add your business <span aria-hidden="true">↗</span></a>
+</section>
+<section class="section directory-section">
+    <div class="section-heading"><div><div class="eyebrow">THE HER RISE DIRECTORY</div><h2>Our community <span class="count-pill">{{ entrepreneurs|length }}</span></h2></div><a class="button button-outline" href="{{ url_for('add_product') }}">＋ Add a product</a></div>
+    <div class="directory-grid">
+        {% for founder in entrepreneurs %}
+        <article class="directory-card">
+            <div class="directory-art directory-art-{{ loop.index % 3 + 1 }}"><span class="directory-symbol">{% if loop.index % 3 == 1 %}✳{% elif loop.index % 3 == 2 %}❋{% else %}✿{% endif %}</span><span class="directory-initials">{{ founder.name.split()[0][0] }}{{ founder.name.split()[-1][0] }}</span></div>
+            <div class="directory-content"><span class="category-tag">{{ founder.category }}</span><h3>{{ founder.name }}</h3><p class="directory-location">⌖ {{ founder.city }}</p><div class="directory-meta"><span>{{ founder.product_count }} {% if founder.product_count == 1 %}product{% else %}products{% endif %}</span><a href="mailto:{{ founder.email }}" aria-label="Email {{ founder.name }}">Say hello <span aria-hidden="true">↗</span></a></div></div>
+        </article>
+        {% else %}
+        <div class="empty-state">No founders yet. <a href="{{ url_for('register') }}">Be the first to join.</a></div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

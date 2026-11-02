@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Add a product — HerRise{% endblock %}
+{% block content %}
+<section class="product-form-page">
+    <div class="product-form-copy"><div class="eyebrow"><span class="eyebrow-dot"></span> SHARE WHAT YOU MAKE</div><h1>Your work deserves<br><span>to be discovered.</span></h1><p>Put your product in the spotlight and help more people find the small businesses they’ll love.</p><div class="product-form-note"><span>✳</span><p>Every product has a story.<br>Let’s help yours travel.</p></div></div>
+    <form class="form-card product-form-card" method="post">
+        <div class="form-card-heading"><span class="form-step">MARKETPLACE</span><h2>Add your product</h2><p>Share the details with the community.</p></div>
+        <label for="entrepreneur_id">Your business</label>
+        <select id="entrepreneur_id" name="entrepreneur_id" required>
+            <option value="" disabled {% if not form.get('entrepreneur_id') %}selected{% endif %}>Select your founder profile</option>
+            {% for founder in entrepreneurs %}<option value="{{ founder.id }}" {% if form.get('entrepreneur_id')|int == founder.id %}selected{% endif %}>{{ founder.name }} — {{ founder.city }}</option>{% endfor %}
+        </select>
+        <label for="name">Product name</label><input id="name" name="name" type="text" placeholder="What do you call it?" value="{{ form.get('name', '') }}" required>
+        <label for="description">A little about it</label><textarea id="description" name="description" rows="4" placeholder="What makes this product special?" required>{{ form.get('description', '') }}</textarea>
+        <label for="price">Price (₹)</label><div class="price-input"><span>₹</span><input id="price" name="price" type="number" min="0" step="0.01" placeholder="0.00" value="{{ form.get('price', '') }}" required></div>
+        <button class="button form-submit" type="submit">Add to the marketplace <span aria-hidden="true">↗</span></button>
+        {% if not entrepreneurs %}<p class="form-footnote">Register your founder profile before adding a product.</p>{% endif %}
+    </form>
+</section>
+{% endblock %}

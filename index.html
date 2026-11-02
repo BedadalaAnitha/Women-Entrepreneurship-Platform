@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}HerRise — Women building what’s next{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> A COMMUNITY THAT MOVES YOU FORWARD</div>
+        <h1>Big ideas.<br><span>Brighter futures.</span></h1>
+        <p class="hero-text">A place for women entrepreneurs to find their people, share what they make, and grow on their own terms.</p>
+        <div class="hero-actions">
+            <a class="button" href="{{ url_for('register') }}">Bring your business to HerRise <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="{{ url_for('businesses') }}">Meet the community <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="community-note">
+            <div class="avatar-stack" aria-hidden="true"><span>AR</span><span>MI</span><span>SK</span><b>+</b></div>
+            <p><strong>{{ entrepreneurs_count }} founders</strong><br>making their own way</p>
+        </div>
+    </div>
+    <div class="hero-art" aria-label="A celebration of women entrepreneurs">
+        <div class="art-sun"></div>
+        <div class="art-spark spark-one">✳</div><div class="art-spark spark-two">✳</div>
+        <div class="art-caption"><span>MADE WITH PURPOSE</span><b>Small business.<br>Big heart.</b></div>
+        <div class="art-bowl"><div class="bowl-content"><span>HER</span><strong>story</strong><i>✳</i></div></div>
+        <div class="art-leaf leaf-left"></div><div class="art-leaf leaf-right"></div>
+        <div class="art-sticker"><span>GROW<br>TOGETHER</span><b>♡</b></div>
+        <div class="art-label">GOOD THINGS<br>GROW HERE <span>↗</span></div>
+    </div>
+</section>
+
+<section class="stats-strip" aria-label="Community snapshot">
+    <div><strong>{{ entrepreneurs_count }}<span>+</span></strong><p>Women-owned businesses</p></div>
+    <div><strong>{{ products_count }}<span>+</span></strong><p>Thoughtful products</p></div>
+    <div><strong>1</strong><p>Community, growing together</p></div>
+    <a href="{{ url_for('businesses') }}">Explore the community <span aria-hidden="true">↗</span></a>
+</section>
+
+<section class="section featured-section">
+    <div class="section-heading">
+        <div><div class="eyebrow">THE PEOPLE BEHIND THE PASSION</div><h2>Meet our founders</h2></div>
+        <a class="text-link" href="{{ url_for('businesses') }}">All businesses <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="founder-grid">
+        {% for founder in businesses %}
+        <article class="founder-card">
+            <div class="founder-visual founder-visual-{{ loop.index }}">
+                <span class="visual-icon">{% if loop.index == 1 %}✳{% elif loop.index == 2 %}❋{% else %}✿{% endif %}</span>
+                <span class="visual-number">0{{ loop.index }}</span>
+                <span class="visual-initials">{{ founder.name.split()[0][0] }}{{ founder.name.split()[-1][0] }}</span>
+            </div>
+            <div class="founder-info">
+                <div><h3>{{ founder.name }}</h3><p>{{ founder.category }}</p></div>
+                <span class="city-tag">⌖ {{ founder.city }}</span>
+            </div>
+            <div class="card-bottom"><span>{{ founder.product_count }} {% if founder.product_count == 1 %}product{% else %}products{% endif %}</span><a href="{{ url_for('businesses') }}" aria-label="Explore {{ founder.name }}’s business">↗</a></div>
+        </article>
+        {% else %}
+        <div class="empty-state">Be the first founder to join the HerRise community.</div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="product-band">
+    <div class="product-copy"><div class="eyebrow">MADE BY OUR COMMUNITY</div><h2>Good things, made<br>by women.</h2><p>Discover the care, craft, and creativity behind every small business.</p><a class="text-link" href="{{ url_for('add_product') }}">Explore the marketplace <span aria-hidden="true">→</span></a></div>
+    <div class="product-list">
+        {% for product in products %}
+        <article class="product-row">
+            <div class="product-thumb thumb-{{ loop.index }}"><span>{% if loop.index == 1 %}◒{% elif loop.index == 2 %}✿{% else %}◈{% endif %}</span></div>
+            <div class="product-details"><h3>{{ product.name }}</h3><p>by {{ product.entrepreneur_name }}</p></div>
+            <strong class="product-price">₹{{ "%.0f"|format(product.price) }}</strong>
+        </article>
+        {% else %}
+        <div class="empty-state">The marketplace is ready for your first product.</div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="closing-cta">
+    <span class="cta-spark">✳</span>
+    <div class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</div>
+    <h2>There’s room for your dream.</h2>
+    <p>Bring your idea, your ambition, your whole self. We’ll help you find your people.</p>
+    <a class="button button-light" href="{{ url_for('register') }}">Join HerRise today <span aria-hidden="true">↗</span></a>
+</section>
+{% endblock %}

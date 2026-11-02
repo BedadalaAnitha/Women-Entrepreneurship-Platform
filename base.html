@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fffaf5">
+    <title>{% block title %}HerRise — Women Entrepreneurship Platform{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-wrap" aria-label="Main navigation">
+            <a class="brand" href="{{ url_for('index') }}" aria-label="HerRise home">
+                <span class="brand-mark">h</span>
+                <span>Her<span class="brand-accent">Rise</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('businesses') }}">Explore businesses</a>
+                <a href="{{ url_for('add_product') }}">Marketplace</a>
+            </div>
+            <a class="button button-small" href="{{ url_for('register') }}">Join the community <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-wrap" role="status">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer class="site-footer">
+        <a class="brand footer-brand" href="{{ url_for('index') }}"><span class="brand-mark">h</span><span>Her<span class="brand-accent">Rise</span></span></a>
+        <p>Built for the women building what’s next.</p>
+        <span>© 2025 HerRise Community</span>
+    </footer>
+</body>
+</html>
